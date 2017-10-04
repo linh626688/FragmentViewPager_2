@@ -28,6 +28,7 @@ public class PageInfo {
         this.resultsPerPage = resultsPerPage;
     }
 
+
     @Override
     public String toString() {
         return "PageInfo{" +

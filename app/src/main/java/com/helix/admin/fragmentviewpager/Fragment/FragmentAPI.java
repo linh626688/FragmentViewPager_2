@@ -43,6 +43,7 @@ public class FragmentAPI extends Fragment {
             @Override
             public void onResponse(Call<GoogleApiModel> call, Response<GoogleApiModel> response) {
                 GoogleApiModel googleApiModel = response.body();
+                String idVideo = googleApiModel.getVideos().get(0).getId();
                 Log.d("@@GoogleApiModel", googleApiModel.toString());
                 responseText = (TextView) view.findViewById(R.id.response_text);
                 responseText.setText(googleApiModel.toString());
