@@ -4,10 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/response_text"
-        android:background="@android:color/darker_gray"
-        android:textColor="@android:color/black"
+    <ListView
+        android:id="@+id/id_listVideo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"></ListView>
 </LinearLayout>
