@@ -4,6 +4,8 @@ package com.helix.admin.fragmentviewpager.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +34,8 @@ import com.helix.admin.fragmentviewpager.retrofitdemo.model.Video;
 
 public class FragmentAPI extends Fragment {
   private VideoAdapter videoAdapter;
-  private ListView lv;
-  private List<Video> lstVideo;
+  private RecyclerView mRv;
+  private ArrayList<Video> lstVideo;
 
   public static FragmentAPI newInstance() {
     FragmentAPI fragmentAPI = new FragmentAPI();
@@ -43,11 +45,14 @@ public class FragmentAPI extends Fragment {
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    lstVideo = loadDataFromYoutube();
 
     final View view = inflater.inflate(R.layout.fragment_api, container, false);
-    lv = view.findViewById(R.id.id_listVideo);
-    videoAdapter = new VideoAdapter(getContext(), loadDataFromYoutube());
-    lv.setAdapter(videoAdapter);
+    mRv = view.findViewById(R.id.api_rv);
+    videoAdapter = new VideoAdapter(lstVideo);
+    mRv.setAdapter(videoAdapter);
+
+
     return view;
   }
 

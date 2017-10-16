@@ -1,10 +1,13 @@
 package com.helix.admin.fragmentviewpager.adapter;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,54 +20,35 @@ import java.util.ArrayList;
  * Created by linh6_000 on 10/08/2017.
  */
 
-public class VideoAdapter extends BaseAdapter {
+public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder> {
   private ArrayList<Video> list = new ArrayList<>();
-  private LayoutInflater minflater;
-  public Context mContext;
 
-  public VideoAdapter(Context mContext, ArrayList<Video> list) {
-    this.mContext = mContext;
+  public VideoAdapter(ArrayList<Video> list) {
     this.list = list;
-    minflater = LayoutInflater.from(mContext);
   }
 
   @Override
-  public int getCount() {
+  public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video, parent, false);
+    return new MyViewHolder(view);
+  }
+
+  @Override
+  public void onBindViewHolder(MyViewHolder holder, int position) {
+    holder.mTextView.setText(list.get(position).getId());
+  }
+
+  @Override
+  public int getItemCount() {
     return list.size();
   }
 
-  @Override
-  public Object getItem(int position) {
-    return list.get(position);
-  }
+  class MyViewHolder extends RecyclerView.ViewHolder {
+    TextView mTextView;
 
-  @Override
-  public long getItemId(int position) {
-    return position;
-  }
-
-  @Override
-  public View getView(int position, View view, ViewGroup parent) {
-    ViewHolder holder = null;
-    if (view == null) {
-      view = minflater.inflate(R.layout.item_video, parent, false);
-      holder = new ViewHolder();
-      holder.tvview = (TextView) view.findViewById(R.id.idVideo);
-      view.setTag(holder);
-
+    public MyViewHolder(View itemView) {
+      super(itemView);
+      mTextView = itemView.findViewById(R.id.idVideo);
     }
-    holder = (ViewHolder) view.getTag();
-    holder.tvview.setText(list.get(position).getId());
-//    view.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View v) {
-//        Toast.makeText(mContext, list.get(position).getName(), Toast.LENGTH_SHORT).show();
-//      }
-//    });
-    return view;
-  }
-
-  private class ViewHolder {
-    TextView tvview;
   }
 }
