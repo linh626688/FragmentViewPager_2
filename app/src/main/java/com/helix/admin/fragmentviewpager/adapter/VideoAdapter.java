@@ -12,17 +12,18 @@ import com.helix.admin.fragmentviewpager.R;
 import com.helix.admin.fragmentviewpager.retrofitdemo.model.Video;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by linh6_000 on 10/08/2017.
  */
 
 public class VideoAdapter extends BaseAdapter {
-  private ArrayList<Video> list = new ArrayList<>();
+  private List<String> list = new ArrayList<>();
   private LayoutInflater minflater;
   public Context mContext;
 
-  public VideoAdapter(Context mContext, ArrayList<Video> list) {
+  public VideoAdapter(Context mContext, List<String> list) {
     this.mContext = mContext;
     this.list = list;
     minflater = LayoutInflater.from(mContext);
@@ -54,7 +55,7 @@ public class VideoAdapter extends BaseAdapter {
 
     }
     holder = (ViewHolder) view.getTag();
-    holder.tvview.setText(list.get(position).getId());
+    holder.tvview.setText(list.get(position));
 //    view.setOnClickListener(new View.OnClickListener() {
 //      @Override
 //      public void onClick(View v) {

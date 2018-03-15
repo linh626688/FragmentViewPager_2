@@ -2,6 +2,7 @@ package com.helix.admin.fragmentviewpager.Fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -33,6 +34,7 @@ import com.helix.admin.fragmentviewpager.retrofitdemo.model.Video;
 public class FragmentAPI extends Fragment {
   private VideoAdapter videoAdapter;
   private ListView lv;
+  private List<String> lstVideoId;
   private List<Video> lstVideo;
 
   public static FragmentAPI newInstance() {
@@ -46,27 +48,28 @@ public class FragmentAPI extends Fragment {
 
     final View view = inflater.inflate(R.layout.fragment_api, container, false);
     lv = view.findViewById(R.id.id_listVideo);
-    videoAdapter = new VideoAdapter(getContext(), loadDataFromYoutube());
+    loadDataFromYoutube();
+    videoAdapter = new VideoAdapter(getContext(), lstVideoId);
     lv.setAdapter(videoAdapter);
     return view;
   }
 
-  public ArrayList<Video> loadDataFromYoutube() {
+  public List<String> loadDataFromYoutube() {
     RetrofitHelper.getVideo().enqueue(new Callback<GoogleApiModel>() {
       @Override
       public void onResponse(Call<GoogleApiModel> call, Response<GoogleApiModel> response) {
         GoogleApiModel googleApiModel = response.body();
-        lstVideo = new ArrayList<Video>();
-        lstVideo = googleApiModel != null ? googleApiModel.getVideos() : null;
-//        String idVideo = googleApiModel.getVideos().get(0).getId();
-        Log.d("@@GoogleApiModel", googleApiModel.toString());
+        lstVideo = googleApiModel.getVideos();
+        Log.d("idVideo", lstVideo.toString());
       }
 
       @Override
       public void onFailure(Call<GoogleApiModel> call, Throwable t) {
-
       }
     });
-    return (ArrayList<Video>) lstVideo;
+    for (Video video : lstVideo) {
+      lstVideoId.add(video.getId());
+    }
+    return lstVideoId;
   }
 }

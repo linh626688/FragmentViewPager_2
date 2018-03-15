@@ -32,10 +32,12 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
             case 0: // Fragment # 0 - This will show FirstFragment
                 return FirstFragment.newInstance(0, "Page # 1");
             case 1: // Fragment # 0 - This will show FirstFragment different title
+                return FirstFragment.newInstance(0, "Page # 1");
 
-                return YoutubeFragment.newInstance();
+//                return YoutubeFragment.newInstance();
             case 2: // Fragment # 1 - This will show SecondFragment
                 return FragmentAPI.newInstance();
+//                return YoutubeFragment.newInstance();
             default:
                 return null;
         }
