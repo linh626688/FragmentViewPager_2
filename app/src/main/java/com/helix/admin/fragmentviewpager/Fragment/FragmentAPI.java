@@ -32,44 +32,46 @@ import com.helix.admin.fragmentviewpager.retrofitdemo.model.Video;
  */
 
 public class FragmentAPI extends Fragment {
-  private VideoAdapter videoAdapter;
-  private ListView lv;
-  private List<String> lstVideoId;
-  private List<Video> lstVideo;
+    private VideoAdapter videoAdapter;
+    private ListView lv;
+    private List<String> lstVideoId;
+    private List<Video> lstVideo;
 
-  public static FragmentAPI newInstance() {
-    FragmentAPI fragmentAPI = new FragmentAPI();
-    return fragmentAPI;
-  }
-
-  @Nullable
-  @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-    final View view = inflater.inflate(R.layout.fragment_api, container, false);
-    lv = view.findViewById(R.id.id_listVideo);
-    loadDataFromYoutube();
-    videoAdapter = new VideoAdapter(getContext(), lstVideoId);
-    lv.setAdapter(videoAdapter);
-    return view;
-  }
-
-  public List<String> loadDataFromYoutube() {
-    RetrofitHelper.getVideo().enqueue(new Callback<GoogleApiModel>() {
-      @Override
-      public void onResponse(Call<GoogleApiModel> call, Response<GoogleApiModel> response) {
-        GoogleApiModel googleApiModel = response.body();
-        lstVideo = googleApiModel.getVideos();
-        Log.d("idVideo", lstVideo.toString());
-      }
-
-      @Override
-      public void onFailure(Call<GoogleApiModel> call, Throwable t) {
-      }
-    });
-    for (Video video : lstVideo) {
-      lstVideoId.add(video.getId());
+    public static FragmentAPI newInstance() {
+        FragmentAPI fragmentAPI = new FragmentAPI();
+        return fragmentAPI;
     }
-    return lstVideoId;
-  }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        final View view = inflater.inflate(R.layout.fragment_api, container, false);
+        lv = view.findViewById(R.id.id_listVideo);
+        loadDataFromYoutube();
+//        videoAdapter = new VideoAdapter(getContext(), lstVideoId);
+//        lv.setAdapter(videoAdapter);
+        return view;
+    }
+
+    public List<String> loadDataFromYoutube() {
+        RetrofitHelper.getVideo().enqueue(new Callback<GoogleApiModel>() {
+            @Override
+            public void onResponse(Call<GoogleApiModel> call, Response<GoogleApiModel> response) {
+                GoogleApiModel googleApiModel = response.body();
+                lstVideo = googleApiModel.getVideos(); //laidi
+                for (Video video : lstVideo) {
+                    lstVideoId.add(video.getId());
+                }
+                Log.d("idVideo", lstVideo.toString());
+            }
+
+            @Override
+            public void onFailure(Call<GoogleApiModel> call, Throwable t) {
+                Log.d("sdsdsd", "onFailure");
+            }
+        });
+
+        return lstVideoId;
+    }
 }
